@@ -5,7 +5,11 @@
 
 
 // Oscilador
-SawOsc s => dac;
+SawOsc s1 => dac;
+TriOsc s2 => dac;
+
+// Setear gain 0
+0.0 => s1.gain => s2.gain;
 
 // Variable float para frequencia
 260 => float myFreq;
@@ -21,13 +25,15 @@ if (chance < 50) {
     // cambiar frecuencia
     Math.random2f(min, max) => myFreq;
     // asignar
-    myFreq => s.freq;
-    // PLAY
+    myFreq => s1.freq;
+    // PLAY sólo s1
+    0.8 => s1.gain;
     0.5 :: second => now;
 } else {
     <<< "equal or higher than 50">>>;
     // fijar frecuencia
-    220 => s.freq;
-    // definir duración aleatoria y PLAY
+    340 => s2.freq;
+    // definir duración aleatoria y PLAY sólo s2
+    0.8 => s2.gain;
     Math.random2f(min, max) :: ms => now;
 }
